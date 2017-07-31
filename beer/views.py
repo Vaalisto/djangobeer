@@ -1,11 +1,14 @@
-from django.http import HttpResponse
+from django.http import Http404
 from django.shortcuts import render
 from .models import Brewery
 
 def index(request):
-	all_breweries = Brewery.objects.all()	
-	context = {'all_breweries': all_breweries}
-	return render(request, 'beer/index.html', context)
+	all_breweries = Brewery.objects.all()
+	return render(request, 'beer/index.html', {'all_breweries': all_breweries})
 
 def detail(request, brewery_id):
-	return HttpResponse("<h2>Details for Brewery id: " + str(brewery_id) + "</h2>")
+	try:
+		brewery = Brewery.objects.get(id=brewery_id)
+	except Brewery.DoesNotExist:
+		raise Http404("Brewery does not exist")
+	return render(request, 'beer/detail.html', {'brewery': brewery})
