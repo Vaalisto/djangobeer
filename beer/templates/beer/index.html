@@ -2,7 +2,7 @@
 	<h3>All breweries</h3>
 	<ul>
 		{% for brewery in all_breweries %}
-		<li><a href="/beer/{{ brewery.id }}">{{ brewery.name}}</a></li>
+			<li><a href="{% url 'beer:detail' brewery.id %}">{{ brewery.name }}</a></li>
 		{% endfor %}
 	</ul>
 {% else %}
