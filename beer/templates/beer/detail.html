@@ -1,1 +1,11 @@
-{{ brewery }}
+<h1>{{ brewery.name }} </h1>
+
+<p>Founded: {{ brewery.year }}</p>
+
+<h3>List of brewery's beers:</h3>
+
+<ul>
+	{% for beer in brewery.beer_set.all %}
+	<li>{{ beer.name }}</li>
+	{% endfor %}
+</ul>
