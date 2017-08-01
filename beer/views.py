@@ -1,10 +1,14 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Brewery
+from django.views import generic
 
-def index(request):
-	all_breweries = Brewery.objects.all()
-	return render(request, 'beer/index.html', {'all_breweries': all_breweries})
+class IndexView(generic.ListView):
+	template_name = 'beer/index.html'
+	context_object_name = 'all_breweries'
 
-def detail(request, brewery_id):
-	brewery = get_object_or_404(Brewery, id=brewery_id)
-	return render(request, 'beer/detail.html', {'brewery': brewery})
+	def get_queryset(self):
+		return Brewery.objects.all()
+
+class DetailView(generic.DetailView):
+	model = Brewery
+	template_name = 'beer/detail.html'
